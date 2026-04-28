@@ -56,14 +56,9 @@ class PayslipActivity : AppCompatActivity() {
         val filterMonth = intent.getIntExtra("MONTH", -1)
         val filterYear = intent.getIntExtra("YEAR", -1)
 
-        // Bottom Navigation Bar IDs
-        val llHome = findViewById<LinearLayout>(R.id.llHome)
-        val llCalendar = findViewById<LinearLayout>(R.id.llCalendar)
-        val llHistory = findViewById<LinearLayout>(R.id.llHistory)
-
         // Set initial employee info from Session
-        tvEmployeeName.text = "Employee : ${MyApplication.sessionManager.fetchUserName() ?: "N/A"}"
-        tvEmployeeId.text = "Employee ID : ${MyApplication.sessionManager.fetchEmpIdSecondary() ?: "N/A"}"
+        tvEmployeeName.text = getString(R.string.employee_name_format, MyApplication.sessionManager.fetchUserName() ?: "N/A")
+        tvEmployeeId.text = getString(R.string.employee_id_format, MyApplication.sessionManager.fetchEmpIdEms() ?: "N/A")
 
         val calendar = Calendar.getInstance()
         val currentMonthName = if (filterMonth != -1) {
@@ -74,11 +69,11 @@ class PayslipActivity : AppCompatActivity() {
             calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
         }
         val displayYear = if (filterYear != -1) filterYear else calendar.get(Calendar.YEAR)
-        tvPayslipMonth.text = "$currentMonthName $displayYear Payslip"
+        tvPayslipMonth.text = getString(R.string.payslip_title_format, currentMonthName, displayYear)
 
         observePayrollData(
             scrollViewPayslip, progressBar, llEarningsContainer, llDeductionsContainer,
-            tvGrossSalary, tvTotalDeductions, tvNetSalary, tvEmployeeId, tvPayslipMonth
+            tvGrossSalary, tvTotalDeductions, tvNetSalary, tvEmployeeId
         )
 
         // Fetch payroll details based on empSalaryId if provided, else fallback to month/year
@@ -87,7 +82,7 @@ class PayslipActivity : AppCompatActivity() {
         } else {
             val monthToFetch = if (filterMonth != -1) filterMonth else calendar.get(Calendar.MONTH) + 1
             val yearToFetch = if (filterYear != -1) filterYear else calendar.get(Calendar.YEAR)
-            payrollViewModel.fetchPayrollDetails(monthToFetch, yearToFetch)
+            payrollViewModel.fetchPayrollFromSession(monthToFetch, yearToFetch)
         }
 
         ivProfile.setOnClickListener {
@@ -139,8 +134,7 @@ class PayslipActivity : AppCompatActivity() {
         tvGross: TextView,
         tvTotalDeductions: TextView,
         tvNet: TextView,
-        tvEmpId: TextView,
-        tvMonth: TextView
+        tvEmpId: TextView
     ) {
         payrollViewModel.isLoading.observe(this) { isLoading ->
             progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
@@ -151,9 +145,9 @@ class PayslipActivity : AppCompatActivity() {
         payrollViewModel.detailData.observe(this) { data ->
             if (data == null) return@observe
             
-            tvGross.text = String.format(Locale.getDefault(), "₹ %.2f", data.grossSalary ?: 0.0)
-            tvTotalDeductions.text = String.format(Locale.getDefault(), "₹ %.2f", data.totalDeductions ?: 0.0)
-            tvNet.text = String.format(Locale.getDefault(), "₹ %.2f", data.netSalary ?: 0.0)
+            tvGross.text = getString(R.string.currency_format, data.grossSalary ?: 0.0)
+            tvTotalDeductions.text = getString(R.string.currency_format, data.totalDeductions ?: 0.0)
+            tvNet.text = getString(R.string.currency_format, data.netSalary ?: 0.0)
 
             // Dynamic Rows for Details
             while (llEarnings.childCount > 1) llEarnings.removeViewAt(1)
@@ -177,12 +171,12 @@ class PayslipActivity : AppCompatActivity() {
             Log.d("PayrollUI", "Received Payroll Data: Gross=${data.grossSalary}, Net=${data.netSalary}")
             
             data.let {
-                tvGross.text = String.format(Locale.getDefault(), "₹ %.2f", it.grossSalary ?: 0.0)
-                tvTotalDeductions.text = String.format(Locale.getDefault(), "₹ %.2f", it.totalDeductions ?: 0.0)
-                tvNet.text = String.format(Locale.getDefault(), "₹ %.2f", it.netSalary ?: 0.0)
+                tvGross.text = getString(R.string.currency_format, it.grossSalary ?: 0.0)
+                tvTotalDeductions.text = getString(R.string.currency_format, it.totalDeductions ?: 0.0)
+                tvNet.text = getString(R.string.currency_format, it.netSalary ?: 0.0)
 
                 if (!it.empId.isNullOrEmpty()) {
-                    tvEmpId.text = "Employee ID : ${it.empId}"
+                    tvEmpId.text = getString(R.string.employee_id_format, it.empId)
                 }
 
                 // Clear previous dynamic rows (keep the header title which is at index 0)
@@ -194,13 +188,10 @@ class PayslipActivity : AppCompatActivity() {
 
                 components.forEach { component ->
                     Log.d("PayrollUI", "Adding Row: ${component.compName} - ${component.amount} (${component.compType})")
-                    if (component.compType == "EARNING") {
-                        addComponentRow(llEarnings, component, false)
-                    } else if (component.compType == "DEDUCTION") {
-                        addComponentRow(llDeductions, component, true)
-                    } else {
-                        // Default to earning if type is missing or different
-                        addComponentRow(llEarnings, component, false)
+                    when (component.compType) {
+                        "EARNING" -> addComponentRow(llEarnings, component, false)
+                        "DEDUCTION" -> addComponentRow(llDeductions, component, true)
+                        else -> addComponentRow(llEarnings, component, false)
                     }
                 }
             }
@@ -274,7 +265,7 @@ class PayslipActivity : AppCompatActivity() {
         }
 
         val amountTv = TextView(context).apply {
-            text = String.format(Locale.getDefault(), "₹ %.2f", component.amount ?: 0.0)
+            text = context.getString(R.string.currency_format, component.amount ?: 0.0)
             setTextColor(if (isDeduction) "#D81B60".toColorInt() else "#2E7D32".toColorInt())
             textSize = 14f
             setTypeface(null, android.graphics.Typeface.BOLD)

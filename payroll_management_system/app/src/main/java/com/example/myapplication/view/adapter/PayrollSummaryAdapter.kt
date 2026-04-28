@@ -3,7 +3,7 @@ package com.example.myapplication.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
@@ -17,9 +17,8 @@ class PayrollSummaryAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvMonthYear: TextView = view.findViewById(R.id.tvMonthYear)
-        val tvNetSalary: TextView = view.findViewById(R.id.tvNetSalary)
-        val tvStatus: TextView = view.findViewById(R.id.tvStatus)
-        val btnViewDetails: Button = view.findViewById(R.id.btnViewDetails)
+        val btnDownload: ImageView = view.findViewById(R.id.btnDownload)
+        val cardView: View = view.findViewById(R.id.cardView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,10 +32,12 @@ class PayrollSummaryAdapter(
         
         val monthName = getMonthName(item.month ?: 0)
         holder.tvMonthYear.text = "$monthName ${item.year ?: ""}"
-        holder.tvNetSalary.text = "Paid ₹ ${item.netSalary ?: 0.0}"
-        holder.tvStatus.text = item.status ?: "PENDING"
         
-        holder.btnViewDetails.setOnClickListener {
+        holder.btnDownload.setOnClickListener {
+            onItemClick(item.empSalaryId)
+        }
+        
+        holder.cardView.setOnClickListener {
             onItemClick(item.empSalaryId)
         }
     }
@@ -47,6 +48,7 @@ class PayrollSummaryAdapter(
         if (month < 1 || month > 12) return ""
         val cal = Calendar.getInstance()
         cal.set(Calendar.MONTH, month - 1)
-        return cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH).uppercase()
+        val name = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH) ?: ""
+        return name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
     }
 }

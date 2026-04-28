@@ -34,6 +34,8 @@ class HolidayActivity : AppCompatActivity() {
 
         rvHolidays.layoutManager = LinearLayoutManager(this)
         
+        NavigationUtils.setupBottomNavigation(this)
+
         viewModel.holidays.observe(this) { holidayList ->
             if (!::holidayAdapter.isInitialized) {
                 holidayAdapter = HolidayAdapter(holidayList)

@@ -2,11 +2,11 @@ package com.example.myapplication.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class LeaveBalanceApiItem(
-    @SerializedName("empLeaveId") val empLeaveId: String?,
-    @SerializedName("leaveType") val leaveType: String?,
-    @SerializedName("remainingLeaves") val remainingLeaves: Double?,
-    @SerializedName("totalLeaves") val totalLeaves: Double?,
-    @SerializedName("usedLeaves") val usedLeaves: Double?,
-    @SerializedName("year") val year: Int?
+data class LeaveBalanceItem(
+    @SerializedName("empLeaveId") val empLeaveId: String? = null,
+    @SerializedName("leaveType") val leaveType: String? = null,
+    @SerializedName("remainingLeaves") val remainingLeaves: Double? = 0.0,
+    @SerializedName("totalLeaves") val totalLeaves: Double? = 0.0,
+    @SerializedName("usedLeaves") val usedLeaves: Double? = 0.0,
+    @SerializedName("year") val year: Int? = 2026
 )

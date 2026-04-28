@@ -26,7 +26,7 @@ class PayrollHistoryActivity : AppCompatActivity() {
         observeViewModel()
         
         // Initial fetch for April 2026
-        viewModel.fetchPayrollSummary(4, 2026)
+        viewModel.fetchPayrollFromSession(4, 2026)
     }
 
     private fun setupUI() {

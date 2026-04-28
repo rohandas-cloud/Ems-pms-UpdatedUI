@@ -21,7 +21,6 @@ import com.example.myapplication.viewmodel.LoginViewModel
 import com.example.myapplication.viewmodel.PayrollViewModel
 import com.example.myapplication.util.NavigationUtils
 import java.util.Calendar
-import java.util.Locale
 
 class FilterPayslipActivity : AppCompatActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
@@ -61,6 +60,10 @@ class FilterPayslipActivity : AppCompatActivity() {
         tvSelectedMonth.text = months[currentMonthIdx]
         tvSelectedYear.text = currentYear.toString()
 
+        // Populate Employee Info from Session
+        tvEmployeeNameCard.text = MyApplication.sessionManager.fetchUserName() ?: "Employee"
+        tvEmployeeIdCard.text = MyApplication.sessionManager.fetchEmpIdPms() ?: "ID: N/A"
+
         findViewById<ImageView>(R.id.btnBack).setOnClickListener {
             finish()
         }
@@ -89,7 +92,7 @@ class FilterPayslipActivity : AppCompatActivity() {
         btnApply.setOnClickListener {
             val month = currentMonthIdx + 1
             val year = currentYear
-            payrollViewModel.fetchPayrollDetails(month, year)
+            payrollViewModel.fetchPayrollFromSession(month, year)
         }
 
         // View Button Logic
@@ -117,7 +120,7 @@ class FilterPayslipActivity : AppCompatActivity() {
 
         payrollViewModel.payrollData.observe(this) { data ->
             if (data != null && (data.grossSalary ?: 0.0) > 0) {
-                Toast.makeText(this, "Payslip found for ${months[currentMonthIdx]} $currentYear", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.payslip_found_format, months[currentMonthIdx], currentYear), Toast.LENGTH_SHORT).show()
                 btnDownload.isEnabled = true
                 btnView.isEnabled = true
             } else {
@@ -131,7 +134,7 @@ class FilterPayslipActivity : AppCompatActivity() {
             result.onSuccess { body ->
                 saveAndOpenPdf(body)
             }.onFailure { t ->
-                Toast.makeText(this, "Download failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.download_failed_format, t.message), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -177,11 +180,11 @@ class FilterPayslipActivity : AppCompatActivity() {
                 setDataAndType(uri, "application/pdf")
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
-            startActivity(Intent.createChooser(intent, "Open Payslip"))
+            startActivity(Intent.createChooser(intent, getString(R.string.open_payslip)))
             
         } catch (e: Exception) {
             Log.e("FilterPayslipActivity", "Error saving PDF", e)
-            Toast.makeText(this, "Error saving PDF: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.error_saving_pdf_format, e.message), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -193,7 +196,7 @@ class FilterPayslipActivity : AppCompatActivity() {
         picker.value = currentMonthIdx
 
         AlertDialog.Builder(this)
-            .setTitle("Select Month")
+            .setTitle(getString(R.string.select_month))
             .setView(picker)
             .setPositiveButton("OK") { _, _ ->
                 currentMonthIdx = picker.value
@@ -211,7 +214,7 @@ class FilterPayslipActivity : AppCompatActivity() {
         picker.value = currentYear
 
         AlertDialog.Builder(this)
-            .setTitle("Select Year")
+            .setTitle(getString(R.string.select_year))
             .setView(picker)
             .setPositiveButton("OK") { _, _ ->
                 currentYear = picker.value

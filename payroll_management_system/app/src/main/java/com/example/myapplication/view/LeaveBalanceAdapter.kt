@@ -28,55 +28,52 @@ class LeaveBalanceAdapter(private val items: List<Any>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        
+
         when (item) {
             is LeaveBalanceResponse -> {
-                // EMS API Response - show all leave types
-                if (position == 0) {
-                    holder.tvLeaveType.text = "Casual Leave"
-                    holder.tvUsedStatus.text = "Available: ${item.casualLeave ?: 0}"
-                    val total = item.totalLeave ?: 0
-                    val casual = item.casualLeave ?: 0
-                    val used = total - casual
-                    holder.tvTotalStatus.text = "$casual of $total Available"
-                    
-                    val progress = if (total > 0) {
-                        ((casual.toDouble() / total) * 100).toInt()
-                    } else 0
-                    holder.progressBar.progress = progress
-                } else if (position == 1) {
-                    holder.tvLeaveType.text = "Sick Leave"
-                    holder.tvUsedStatus.text = "Available: ${item.sickLeave ?: 0}"
-                    val total = item.totalLeave ?: 0
-                    val sick = item.sickLeave ?: 0
-                    holder.tvTotalStatus.text = "$sick of $total Available"
-                    
-                    val progress = if (total > 0) {
-                        ((sick.toDouble() / total) * 100).toInt()
-                    } else 0
-                    holder.progressBar.progress = progress
-                } else if (position == 2) {
-                    holder.tvLeaveType.text = "Earned Leave"
-                    holder.tvUsedStatus.text = "Available: ${item.earnedLeave ?: 0}"
-                    val total = item.totalLeave ?: 0
-                    val earned = item.earnedLeave ?: 0
-                    holder.tvTotalStatus.text = "$earned of $total Available"
-                    
-                    val progress = if (total > 0) {
-                        ((earned.toDouble() / total) * 100).toInt()
-                    } else 0
-                    holder.progressBar.progress = progress
+                // EMS API Response - show all leave types based on position
+                val total = item.totalLeave?.toDouble() ?: 0.0
+                
+                when (position) {
+                    0 -> {
+                        val casual = item.casualLeave?.toDouble() ?: 0.0
+                        holder.tvLeaveType.text = "Casual Leave"
+                        holder.tvUsedStatus.text = "Available: ${casual.toInt()}"
+                        holder.tvTotalStatus.text = "${casual.toInt()} of ${total.toInt()} Available"
+                        
+                        val progress = if (total > 0.0) ((casual / total) * 100).toInt() else 0
+                        holder.progressBar.progress = progress
+                    }
+                    1 -> {
+                        val sick = item.sickLeave?.toDouble() ?: 0.0
+                        holder.tvLeaveType.text = "Sick Leave"
+                        holder.tvUsedStatus.text = "Available: ${sick.toInt()}"
+                        holder.tvTotalStatus.text = "${sick.toInt()} of ${total.toInt()} Available"
+                        
+                        val progress = if (total > 0.0) ((sick / total) * 100).toInt() else 0
+                        holder.progressBar.progress = progress
+                    }
+                    2 -> {
+                        val earned = item.earnedLeave?.toDouble() ?: 0.0
+                        holder.tvLeaveType.text = "Earned Leave"
+                        holder.tvUsedStatus.text = "Available: ${earned.toInt()}"
+                        holder.tvTotalStatus.text = "${earned.toInt()} of ${total.toInt()} Available"
+                        
+                        val progress = if (total > 0.0) ((earned / total) * 100).toInt() else 0
+                        holder.progressBar.progress = progress
+                    }
                 }
             }
             is LeaveBalanceItem -> {
                 // Legacy PMS API Response
-                holder.tvLeaveType.text = item.leaveType
-                holder.tvUsedStatus.text = "Used: ${item.usedLeaves}"
-                holder.tvTotalStatus.text = "${item.usedLeaves} of ${item.totalLeaves} Used"
+                val used = item.usedLeaves ?: 0.0
+                val total = item.totalLeaves ?: 0.0
                 
-                val progress = if (item.totalLeaves > 0) {
-                    ((item.usedLeaves / item.totalLeaves) * 100).toInt()
-                } else 0
+                holder.tvLeaveType.text = item.leaveType ?: "Leave"
+                holder.tvUsedStatus.text = "Used: ${used.toInt()}"
+                holder.tvTotalStatus.text = "${used.toInt()} of ${total.toInt()} Used"
+                
+                val progress = if (total > 0) ((used / total) * 100).toInt() else 0
                 holder.progressBar.progress = progress
             }
         }

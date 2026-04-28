@@ -69,7 +69,7 @@
         // 2.4 Leave Balance
         @GET("api/leaves/balance/{empId}")
         suspend fun getLeaveBalance(@Path("empId") empId: String
-        ): Response<List<LeaveBalanceApiItem>>
+        ): Response<List<LeaveBalanceItem>>
 
         // 2.5 Leave Requests (HR)
         @GET("api/leaves/requests")

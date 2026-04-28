@@ -17,7 +17,6 @@ class CalendarAdapter(
     class CalendarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvDayNumber: TextView = view.findViewById(R.id.tvDayNumber)
         val dotStatus: View = view.findViewById(R.id.dotStatus)
-        val llDayContainer: View = view.findViewById(R.id.llDayContainer)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
@@ -39,16 +38,21 @@ class CalendarAdapter(
                 android.util.Log.d("CALENDAR_ADAPTER", "Date 16 status: ${day.status}")
             }
 
-            when (day.status) {
+            when (day.status?.lowercase()) {
                 "present" -> {
                     holder.dotStatus.visibility = View.VISIBLE
                     holder.dotStatus.setBackgroundResource(R.drawable.dot_present)
-                    holder.tvDayNumber.setTextColor(ContextCompat.getColor(context, R.color.present_text))
+                    holder.tvDayNumber.setTextColor(ContextCompat.getColor(context, android.R.color.black))
                 }
                 "absent" -> {
                     holder.dotStatus.visibility = View.VISIBLE
                     holder.dotStatus.setBackgroundResource(R.drawable.dot_absent)
-                    holder.tvDayNumber.setTextColor(ContextCompat.getColor(context, R.color.absent_text))
+                    holder.tvDayNumber.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+                }
+                "leave" -> {
+                    holder.dotStatus.visibility = View.VISIBLE
+                    holder.dotStatus.setBackgroundResource(R.drawable.dot_leave)
+                    holder.tvDayNumber.setTextColor(ContextCompat.getColor(context, android.R.color.black))
                 }
                 else -> {
                     holder.dotStatus.visibility = View.INVISIBLE

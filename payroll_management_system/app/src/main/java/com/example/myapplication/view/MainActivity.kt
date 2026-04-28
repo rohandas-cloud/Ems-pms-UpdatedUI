@@ -3,7 +3,6 @@ package com.example.myapplication.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -40,11 +39,15 @@ class MainActivity : AppCompatActivity() {
             val password = etPassword.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.error_empty_fields), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            viewModel.dualLogin(email, password)
+            // viewModel.dualLogin(email, password)
+            // Bypassing login for now
+            val intent = Intent(this, SecondActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         // Observe login state
@@ -52,12 +55,12 @@ class MainActivity : AppCompatActivity() {
             when (state) {
                 is LoginState.Loading -> {
                     btnLogin.isEnabled = false
-                    btnLogin.text = "Logging in..."
+                    btnLogin.text = getString(R.string.logging_in)
                 }
                 is LoginState.Success -> {
                     btnLogin.isEnabled = true
-                    btnLogin.text = "Login"
-                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
+                    btnLogin.text = getString(R.string.btn_login)
+                    Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
                     Log.d("MainActivity", "Dual login successful - PMS empId: ${MyApplication.sessionManager.fetchEmpIdPms()}, EMS empId: ${MyApplication.sessionManager.fetchEmpIdEms()}")
                     
                     // Navigate to SecondActivity (Dashboard)
@@ -67,10 +70,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 is LoginState.PartialSuccess -> {
                     btnLogin.isEnabled = true
-                    btnLogin.text = "Login"
+                    btnLogin.text = getString(R.string.btn_login)
                     Toast.makeText(
                         this,
-                        "Partial login: ${state.result.errorMessage}",
+                        getString(R.string.partial_login, state.result.errorMessage),
                         Toast.LENGTH_LONG
                     ).show()
                     Log.w("MainActivity", "Partial login - ${state.result.errorMessage}")
@@ -82,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 is LoginState.Error -> {
                     btnLogin.isEnabled = true
-                    btnLogin.text = "Login"
+                    btnLogin.text = getString(R.string.btn_login)
                     Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
                     Log.e("MainActivity", "Login error: ${state.message}")
                 }

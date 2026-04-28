@@ -66,6 +66,16 @@
             android:name=".view.HolidayActivity"
             android:exported="false" />
 
+        <!-- Profile -->
+        <activity
+            android:name=".view.ProfileActivity"
+            android:exported="false" />
+
+        <!-- Salary Overview -->
+        <activity
+            android:name=".view.SalaryOverviewActivity"
+            android:exported="false" />
+
         <!-- ================= FILE PROVIDER ================= -->
         <provider
             android:name="androidx.core.content.FileProvider"

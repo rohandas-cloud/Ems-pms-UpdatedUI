@@ -17,9 +17,12 @@ class PayrollSummaryAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvMonthYear: TextView = view.findViewById(R.id.tvMonthYear)
+        val btnDownload: View = view.findViewById(R.id.btnDownload)
+        
+        // Compatibility
         val tvNetSalary: TextView = view.findViewById(R.id.tvNetSalary)
         val tvStatus: TextView = view.findViewById(R.id.tvStatus)
-        val btnViewDetails: Button = view.findViewById(R.id.btnViewDetails)
+        val btnViewDetails: View = view.findViewById(R.id.btnViewDetails)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,9 +36,14 @@ class PayrollSummaryAdapter(
         
         val monthName = getMonthName(item.month ?: 0)
         holder.tvMonthYear.text = "$monthName ${item.year ?: ""}"
+        
+        holder.btnDownload.setOnClickListener {
+            onItemClick(item.empSalaryId, item.month ?: 0, item.year ?: 0)
+        }
+
+        // Compatibility
         holder.tvNetSalary.text = "Paid ₹ ${item.netSalary ?: 0.0}"
         holder.tvStatus.text = item.status ?: "PENDING"
-        
         holder.btnViewDetails.setOnClickListener {
             onItemClick(item.empSalaryId, item.month ?: 0, item.year ?: 0)
         }
@@ -47,6 +55,6 @@ class PayrollSummaryAdapter(
         if (month < 1 || month > 12) return ""
         val cal = Calendar.getInstance()
         cal.set(Calendar.MONTH, month - 1)
-        return cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.ENGLISH).uppercase()
+        return cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH)
     }
 }

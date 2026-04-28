@@ -26,116 +26,73 @@ class Calender : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_calender)
+        setContentView(R.layout.activity_attendance)
 
         NavigationUtils.setupBottomNavigation(this)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.rvCalendar)
         val btnBack = findViewById<ImageView>(R.id.btnBack)
-        val tvMonthYear = findViewById<TextView>(R.id.tvMonthYear)
-
-        // Summary Views
-        val tvPresentCount = findViewById<TextView>(R.id.tvPresentCount)
-        val tvAbsentCount = findViewById<TextView>(R.id.tvAbsentCount)
-        val tvWeekendCount = findViewById<TextView>(R.id.tvWeekendCount)
-        val tvAverageTime = findViewById<TextView>(R.id.tvAverageTime)
-
-        btnBack.setOnClickListener { finish() }
-
-        // attendanceViewModel.fetchTodayAttendance()
-
-        recyclerView.layoutManager = GridLayoutManager(this, 7)
+        val rvCalendar = findViewById<RecyclerView>(R.id.rvCalendar)
+        
+        rvCalendar.layoutManager = GridLayoutManager(this, 7)
 
         // Observers
-        viewModel.currentMonthName.observe(this) { tvMonthYear.text = it }
-        viewModel.presentCount.observe(this) { count ->
-            tvPresentCount.text = getString(R.string.days_count_format, count)
-        }
-        viewModel.absentCount.observe(this) { count ->
-            tvAbsentCount.text = getString(R.string.days_count_format, count)
-        }
-        viewModel.weekendCount.observe(this) { count ->
-            tvWeekendCount.text = getString(R.string.days_count_format, count)
-        }
-        viewModel.averageWorkingHours.observe(this) { tvAverageTime.text = it }
-
         viewModel.calendarDays.observe(this) { daysList ->
-            recyclerView.adapter = CalendarAdapter(daysList) { day ->
-                viewModel.onDateSelected(day)
+            rvCalendar.adapter = CalendarAdapter(daysList) { day ->
+                // Handle date selection if needed
             }
         }
 
-        viewModel.selectedAttendance.observe(this) { record ->
-            if (record != null) {
-                // Show dialog with attendance details
-                showAttendanceDialog(record)
-            } else {
-                // Show message that no attendance record found
-                Toast.makeText(this, "No attendance record found for this date", Toast.LENGTH_SHORT).show()
-            }
+        val tvMonthFilter = findViewById<TextView>(R.id.tvMonthFilter)
+        
+        // Observe month name
+        viewModel.currentMonthName.observe(this) { monthName ->
+            tvMonthFilter.text = monthName
         }
 
-        // Initialize Calendar for April 2026
-        viewModel.generateCalendar(4, 2026)
+        // Initialize Calendar for current month
+        val currentCalendar = java.util.Calendar.getInstance()
+        val currentMonth = currentCalendar.get(java.util.Calendar.MONTH) + 1
+        val currentYear = currentCalendar.get(java.util.Calendar.YEAR)
+        viewModel.generateCalendar(currentMonth, currentYear)
+
+        tvMonthFilter.setOnClickListener { view ->
+            val listPopupWindow = android.widget.ListPopupWindow(this)
+            listPopupWindow.anchorView = view
+            
+            val monthsList = mutableListOf<String>()
+            val monthData = mutableListOf<Pair<Int, Int>>() // Pair of Month, Year
+            
+            val cal = java.util.Calendar.getInstance()
+            for (i in 0 until 4) {
+                val m = cal.get(java.util.Calendar.MONTH) + 1
+                val y = cal.get(java.util.Calendar.YEAR)
+                val name = java.text.SimpleDateFormat("MMMM yyyy", java.util.Locale.getDefault()).format(cal.time)
+                monthsList.add(name)
+                monthData.add(Pair(m, y))
+                cal.add(java.util.Calendar.MONTH, -1)
+            }
+            
+            val adapter = android.widget.ArrayAdapter(this, android.R.layout.simple_list_item_1, monthsList)
+            listPopupWindow.setAdapter(adapter)
+            
+            listPopupWindow.setOnItemClickListener { _, _, position, _ ->
+                val (m, y) = monthData[position]
+                viewModel.generateCalendar(m, y)
+                listPopupWindow.dismiss()
+            }
+            
+            listPopupWindow.show()
+        }
 
         val empId = com.example.myapplication.MyApplication.sessionManager.fetchEmpIdEms() ?: ""
         if (empId.isNotEmpty()) {
             attendanceViewModel.fetchAttendanceHistory(empId)
-        } else {
-            Toast.makeText(this, "Employee ID not found. Please login again.", Toast.LENGTH_SHORT).show()
         }
 
         attendanceViewModel.attendanceHistory.observe(this) { history ->
             viewModel.setAttendanceData(history)
         }
 
-        attendanceViewModel.errorMessage.observe(this) { error ->
-            if (error.isNotEmpty()) {
-                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun showAttendanceDialog(record: com.example.myapplication.data.model.AttendanceResponse) {
-        // Log the exact data being displayed
-        android.util.Log.d("CalendarDialog", "========== SHOWING ATTENDANCE DIALOG ==========")
-        android.util.Log.d("CalendarDialog", "Date: ${record.date}")
-        android.util.Log.d("CalendarDialog", "In Time: ${record.inTime}")
-        android.util.Log.d("CalendarDialog", "Out Time: ${record.outTime}")
-        android.util.Log.d("CalendarDialog", "Working Hours: ${record.workingHour}")
-        android.util.Log.d("CalendarDialog", "Status: ${record.status}")
-        android.util.Log.d("CalendarDialog", "Message: ${record.message}")
-        android.util.Log.d("CalendarDialog", "Raw Record: $record")
-        android.util.Log.d("CalendarDialog", "====================================================")
-        
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_attendance_details)
-        dialog.window?.setLayout(
-            android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-            android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCancelable(true)
-
-        // Get dialog views
-        val tvDialogDate = dialog.findViewById<TextView>(R.id.tvDialogDate)
-        val tvDialogInTime = dialog.findViewById<TextView>(R.id.tvDialogInTime)
-        val tvDialogOutTime = dialog.findViewById<TextView>(R.id.tvDialogOutTime)
-        val tvDialogWorkingHours = dialog.findViewById<TextView>(R.id.tvDialogWorkingHours)
-        val btnDialogClose = dialog.findViewById<Button>(R.id.btnDialogClose)
-
-        // Set data from API response
-        tvDialogDate.text = getString(R.string.date_label_format, record.date ?: getString(R.string.not_available))
-        tvDialogInTime.text = if (record.inTime.isNullOrEmpty()) getString(R.string.not_checked_in) else record.inTime
-        tvDialogOutTime.text = if (record.outTime.isNullOrEmpty()) getString(R.string.not_checked_out) else record.outTime
-        tvDialogWorkingHours.text = if (record.workingHour.isNullOrEmpty()) getString(R.string.not_available) else record.workingHour
-
-        // Close button click
-        btnDialogClose.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
+        btnBack.setOnClickListener { finish() }
     }
 }

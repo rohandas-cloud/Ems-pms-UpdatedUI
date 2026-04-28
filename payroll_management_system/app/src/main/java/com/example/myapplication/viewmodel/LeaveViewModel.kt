@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 
 class LeaveViewModel : ViewModel() {
 
+    private val repository = com.example.myapplication.data.repository.LeaveRepository()
     private val emsApi = RetrofitClient.emsApi
 
     // =====================
@@ -46,91 +47,29 @@ class LeaveViewModel : ViewModel() {
     // =====================
     fun fetchLeaveBalance() {
         val empId = MyApplication.sessionManager.fetchEmpIdEms()
-        
-        Log.d("LeaveVM", "========== FETCH LEAVE BALANCE START ==========")
-        Log.d("LeaveVM", "empId from session: $empId")
-        
-        if (empId == null) {
-            _errorMessage.value = "Leave feature unavailable: EMS login failed. Please login again."
-            Log.w("LeaveVM", "EMS empId is null - Leave feature disabled. User may have partial login (PMS only).")
-            Log.d("LeaveVM", "================================================")
-            return
-        }
-
-        // Validate empId is not blank
-        if (empId.isBlank()) {
+        if (empId.isNullOrBlank()) {
             _errorMessage.value = "Invalid Employee ID. Please login again."
-            Log.e("LeaveVM", "EMS empId is blank - invalid session state")
-            Log.d("LeaveVM", "================================================")
             return
         }
-
-        Log.d("LeaveVM", "✅ Validated empId: $empId")
 
         viewModelScope.launch {
             _isLoading.value = true
-
-            try {
-                Log.d("LeaveVM", "Making API call with empId: $empId")
-                Log.d("LeaveVM", "API URL: ${RetrofitClient.emsApi}")
-                
-                val response = emsApi.getLeaveBalance(empId)
-                Log.d("LeaveVM", "Response Code: ${response.code()}")
-                Log.d("LeaveVM", "Is Successful: ${response.isSuccessful}")
-                Log.d("LeaveVM", "Response Message: ${response.message()}")
-                Log.d("LeaveVM", "Response Headers: ${response.headers()}")
-                Log.d("LeaveVM", "Response Body: ${response.body()}")
-                Log.d("LeaveVM", "Error Body: ${response.errorBody()?.string()}")
-                
-                // Verify response empId matches request empId
-                if (response.isSuccessful && response.body() != null) {
-                    val dataList = response.body()!!
-                    Log.d("LeaveVM", "Success! Leave Balance:")
-                    Log.d("LeaveVM", "Full response body: $dataList")
-                    Log.d("LeaveVM", "Received ${dataList.size} balance record(s)")
-                    
-                    // Use the first record if available
-                    val data = dataList.firstOrNull()
-                    
-                    if (data != null) {
-                        Log.d("LeaveVM", "  Request empId: $empId")
-                        Log.d("LeaveVM", "  Response empId: ${data.empId}")
-                        
-                        // Validate response empId matches request
-                        if (data.empId != null && data.empId != empId) {
-                            Log.w("LeaveVM", "⚠️ MISMATCH: Request empId ($empId) != Response empId (${data.empId})")
-                        }
-                        
-                        Log.d("LeaveVM", "  casualLeave: ${data.casualLeave}")
-                        Log.d("LeaveVM", "  sickLeave: ${data.sickLeave}")
-                        Log.d("LeaveVM", "  earnedLeave: ${data.earnedLeave}")
-                        Log.d("LeaveVM", "  totalLeave: ${data.totalLeave}")
-                        Log.d("LeaveVM", "  message: ${data.message}")
-                        Log.d("LeaveVM", "  Raw object: $data")
-                        _leaveBalances.value = data
-                    } else {
-                        Log.w("LeaveVM", "Empty balance list received")
-                        _leaveBalances.value = null
-                    }
-                    Log.d("LeaveVM", "================================================")
-                } else {
-                    val errorBody = response.errorBody()?.string()
-                    Log.e("LeaveVM", "Failed to fetch balance. Code: ${response.code()}")
-                    Log.e("LeaveVM", "Error Message: ${response.message()}")
-                    Log.e("LeaveVM", "Error Body: $errorBody")
-                    Log.e("LeaveVM", "Response Headers: ${response.headers()}")
-                    _error.value = "Failed to load balance: ${response.code()}"
+            val result = repository.getLeaveBalance(empId)
+            result.onSuccess { dataList ->
+                _leaveBalances.value = dataList.firstOrNull()?.let { 
+                    // Map LeaveBalanceItem back to LeaveBalanceResponse if needed for compatibility
+                    LeaveBalanceResponse(
+                        empId = it.empLeaveId,
+                        casualLeave = it.remainingLeaves?.toInt() ?: 0,
+                        sickLeave = 0, // Placeholder
+                        earnedLeave = 0,
+                        totalLeave = it.totalLeaves?.toInt() ?: 0
+                    )
                 }
-            } catch (e: Exception) {
-                Log.e("LeaveVM", "========== FETCH LEAVE BALANCE FAILED ==========")
-                Log.e("LeaveVM", "Exception: ${e.message}")
-                Log.e("LeaveVM", "Exception Type: ${e.javaClass.simpleName}")
-                e.printStackTrace()
-                Log.d("LeaveVM", "================================================")
+            }.onFailure { e ->
                 _error.value = e.message ?: "Failed to load balance"
-            } finally {
-                _isLoading.value = false
             }
+            _isLoading.value = false
         }
     }
 
@@ -140,48 +79,13 @@ class LeaveViewModel : ViewModel() {
     fun fetchLeaveTypes() {
         viewModelScope.launch {
             _isLoading.value = true
-
-            try {
-                Log.d("LeaveVM", "========== FETCH LEAVE TYPES ==========")
-                
-                val response = emsApi.getLeaveTypes()
-                Log.d("LeaveVM", "Response Code: ${response.code()}")
-                Log.d("LeaveVM", "Is Successful: ${response.isSuccessful}")
-                Log.d("LeaveVM", "Response Message: ${response.message()}")
-                Log.d("LeaveVM", "Response Headers: ${response.headers()}")
-                
-                if (response.isSuccessful && response.body() != null) {
-                    val data = response.body()!!
-                    Log.d("LeaveVM", "Success! Received ${data.size} leave types")
-                    Log.d("LeaveVM", "Full response body: $data")
-                    data.forEachIndexed { index, leaveType ->
-                        Log.d("LeaveVM", "  Type ${index + 1}:")
-                        Log.d("LeaveVM", "    typeId: ${leaveType.typeId}")
-                        Log.d("LeaveVM", "    type: ${leaveType.type}")
-                        Log.d("LeaveVM", "    carryForwardAllowed: ${leaveType.carryForwardAllowed}")
-                        Log.d("LeaveVM", "    maxConsecutiveDays: ${leaveType.maxConsecutiveDays}")
-                        Log.d("LeaveVM", "    Raw object: $leaveType")
-                    }
-                    Log.d("LeaveVM", "================================================")
-                    _leaveTypes.value = data
-                } else {
-                    val errorBody = response.errorBody()?.string()
-                    Log.e("LeaveVM", "Failed to fetch leave types. Code: ${response.code()}")
-                    Log.e("LeaveVM", "Error Message: ${response.message()}")
-                    Log.e("LeaveVM", "Error Body: $errorBody")
-                    Log.e("LeaveVM", "Response Headers: ${response.headers()}")
-                    _error.value = "Failed to load leave types: ${response.code()}"
-                }
-            } catch (e: Exception) {
-                Log.e("LeaveVM", "========== FETCH LEAVE TYPES FAILED ==========")
-                Log.e("LeaveVM", "Exception: ${e.message}")
-                Log.e("LeaveVM", "Exception Type: ${e.javaClass.simpleName}")
-                e.printStackTrace()
-                Log.d("LeaveVM", "================================================")
+            val result = repository.getLeaveTypes()
+            result.onSuccess { data ->
+                _leaveTypes.value = data
+            }.onFailure { e ->
                 _error.value = e.message ?: "Failed to load leave types"
-            } finally {
-                _isLoading.value = false
             }
+            _isLoading.value = false
         }
     }
 
@@ -191,53 +95,13 @@ class LeaveViewModel : ViewModel() {
     fun applyLeave(request: LeaveApplyRequest) {
         viewModelScope.launch {
             _isLoading.value = true
-
-            try {
-                Log.d("LeaveVM", "========== APPLY LEAVE ==========")
-                Log.d("LeaveVM", "Request:")
-                Log.d("LeaveVM", "  empLeaveId: ${request.empId}")
-                Log.d("LeaveVM", "  leaveDay: ${request.leaveDay}")
-                Log.d("LeaveVM", "  description: ${request.reason}")
-                Log.d("LeaveVM", "  noOfDays: ${request.noOfDays}")
-                Log.d("LeaveVM", "  startDate: ${request.startDate}")
-                Log.d("LeaveVM", "  endDate: ${request.endDate}")
-                Log.d("LeaveVM", "  Full request object: $request")
-                
-                val response = emsApi.applyLeave(request)
-                Log.d("LeaveVM", "Response Code: ${response.code()}")
-                Log.d("LeaveVM", "Is Successful: ${response.isSuccessful}")
-                Log.d("LeaveVM", "Response Message: ${response.message()}")
-                Log.d("LeaveVM", "Response Headers: ${response.headers()}")
-                
-                if (response.isSuccessful && response.body() != null) {
-                    val data = response.body()!!
-                    Log.d("LeaveVM", "Success!")
-                    Log.d("LeaveVM", "Full response body: $data")
-                    Log.d("LeaveVM", "  leaveApplicationId: ${data.leaveApplicationId}")
-                    Log.d("LeaveVM", "  status: ${data.status}")
-                    Log.d("LeaveVM", "  message: ${data.message}")
-                    Log.d("LeaveVM", "  Raw object: $data")
-                    Log.d("LeaveVM", "================================================")
-                    _applyResult.value = true to (data.message ?: "Leave applied successfully")
-                } else {
-                    val errorBody = response.errorBody()?.string()
-                    Log.e("LeaveVM", "Failed to apply leave. Code: ${response.code()}")
-                    Log.e("LeaveVM", "Error Message: ${response.message()}")
-                    Log.e("LeaveVM", "Error Body: $errorBody")
-                    Log.e("LeaveVM", "Response Headers: ${response.headers()}")
-                    Log.d("LeaveVM", "================================================")
-                    _applyResult.value = false to ("Failed to apply leave: ${response.code()}")
-                }
-            } catch (e: Exception) {
-                Log.e("LeaveVM", "========== APPLY LEAVE FAILED ==========")
-                Log.e("LeaveVM", "Exception: ${e.message}")
-                Log.e("LeaveVM", "Exception Type: ${e.javaClass.simpleName}")
-                e.printStackTrace()
-                Log.d("LeaveVM", "================================================")
+            val result = repository.applyLeave(request)
+            result.onSuccess { message ->
+                _applyResult.value = true to message
+            }.onFailure { e ->
                 _applyResult.value = false to (e.message ?: "Apply leave failed")
-            } finally {
-                _isLoading.value = false
             }
+            _isLoading.value = false
         }
     }
 
@@ -246,84 +110,20 @@ class LeaveViewModel : ViewModel() {
     // =====================
     fun fetchLeaveHistory() {
         val empId = MyApplication.sessionManager.fetchEmpIdEms()
-        
-        Log.d("LeaveVM", "========== FETCH LEAVE HISTORY START ==========")
-        Log.d("LeaveVM", "empId from session: $empId")
-        
-        if (empId == null) {
-            _errorMessage.value = "Leave history unavailable: EMS login failed."
-            Log.w("LeaveVM", "EMS empId is null - Leave history disabled.")
-            Log.d("LeaveVM", "================================================")
-            return
-        }
-
-        // Validate empId is not blank
-        if (empId.isBlank()) {
+        if (empId.isNullOrBlank()) {
             _errorMessage.value = "Invalid Employee ID. Please login again."
-            Log.e("LeaveVM", "EMS empId is blank - invalid session state")
-            Log.d("LeaveVM", "================================================")
             return
         }
-
-        Log.d("LeaveVM", "✅ Validated empId: $empId")
 
         viewModelScope.launch {
             _isLoading.value = true
-
-            try {
-                Log.d("LeaveVM", "Making API call with empId: $empId")
-                Log.d("LeaveVM", "API URL: ${RetrofitClient.emsApi}")
-                
-                val response = emsApi.getLeaveHistory(empId)
-                Log.d("LeaveVM", "Response Code: ${response.code()}")
-                Log.d("LeaveVM", "Is Successful: ${response.isSuccessful}")
-                Log.d("LeaveVM", "Response Message: ${response.message()}")
-                Log.d("LeaveVM", "Response Headers: ${response.headers()}")
-                Log.d("LeaveVM", "Response Body: ${response.body()}")
-                Log.d("LeaveVM", "Error Body: ${response.errorBody()?.string()}")
-                
-                if (response.isSuccessful && response.body() != null) {
-                    val data = response.body()!!
-                    Log.d("LeaveVM", "Success! Received ${data.size} leave records")
-                    Log.d("LeaveVM", "Full response body: $data")
-                    data.forEachIndexed { index, leave ->
-                        Log.d("LeaveVM", "  Leave ${index + 1}:")
-                        Log.d("LeaveVM", "    Request empId: $empId")
-                        Log.d("LeaveVM", "    Response empId: ${leave.empId}")
-                        
-                        // Validate response empId matches request
-                        if (leave.empId != null && leave.empId != empId) {
-                            Log.w("LeaveVM", "⚠️ MISMATCH: Request empId ($empId) != Response empId (${leave.empId})")
-                        }
-                        
-                        Log.d("LeaveVM", "    leaveApplicationId: ${leave.leaveApplicationId}")
-                        Log.d("LeaveVM", "    leaveType: ${leave.leaveType}")
-                        Log.d("LeaveVM", "    startDate: ${leave.startDate}")
-                        Log.d("LeaveVM", "    endDate: ${leave.endDate}")
-                        Log.d("LeaveVM", "    noOfDays: ${leave.noOfDays}")
-                        Log.d("LeaveVM", "    status: ${leave.status}")
-                        Log.d("LeaveVM", "    Raw object: $leave")
-                    }
-                    Log.d("LeaveVM", "================================================")
-                    _leaveHistory.value = data
-                } else {
-                    val errorBody = response.errorBody()?.string()
-                    Log.e("LeaveVM", "Failed to fetch history. Code: ${response.code()}")
-                    Log.e("LeaveVM", "Error Message: ${response.message()}")
-                    Log.e("LeaveVM", "Error Body: $errorBody")
-                    Log.e("LeaveVM", "Response Headers: ${response.headers()}")
-                    _errorMessage.value = "Failed to load leave history: ${response.code()}"
-                }
-            } catch (e: Exception) {
-                Log.e("LeaveVM", "========== FETCH LEAVE HISTORY FAILED ==========")
-                Log.e("LeaveVM", "Exception: ${e.message}")
-                Log.e("LeaveVM", "Exception Type: ${e.javaClass.simpleName}")
-                e.printStackTrace()
-                Log.d("LeaveVM", "================================================")
+            val result = repository.getLeaveHistory(empId)
+            result.onSuccess { data ->
+                _leaveHistory.value = data
+            }.onFailure { e ->
                 _errorMessage.value = e.message ?: "Failed to load leave history"
-            } finally {
-                _isLoading.value = false
             }
+            _isLoading.value = false
         }
     }
 
