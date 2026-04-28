@@ -24,6 +24,20 @@ class ProfileActivity : AppCompatActivity() {
 
         val btnBack = findViewById<ImageView>(R.id.btnBack)
         val btnLogout = findViewById<Button>(R.id.btnLogout)
+        val switchDarkMode = findViewById<android.widget.Switch>(R.id.switchDarkMode)
+
+        // Set initial state
+        val isDark = com.example.myapplication.MyApplication.sessionManager.isDarkMode()
+        switchDarkMode.isChecked = isDark
+
+        switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
+            com.example.myapplication.MyApplication.sessionManager.setDarkMode(isChecked)
+            if (isChecked) {
+                androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
 
         btnBack.setOnClickListener {
             finish()

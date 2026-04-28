@@ -13,5 +13,12 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         sessionManager = SessionManager(applicationContext)
+        
+        // Apply dark mode based on user preference
+        if (sessionManager.isDarkMode()) {
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 }

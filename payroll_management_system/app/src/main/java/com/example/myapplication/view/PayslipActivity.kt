@@ -113,6 +113,9 @@ class PayslipActivity : AppCompatActivity() {
         }
 
         btnBack.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
             finish()
         }
 
@@ -289,5 +292,12 @@ class PayslipActivity : AppCompatActivity() {
             setBackgroundColor("#CCCCCC".toColorInt())
         }
         container.addView(divider)
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, SecondActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
     }
 }

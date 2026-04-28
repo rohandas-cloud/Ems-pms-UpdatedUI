@@ -16,17 +16,20 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
 
-        <!-- ================= MAIN ACTIVITY ================= -->
+        <!-- ================= SPLASH ACTIVITY ================= -->
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.SplashActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+
+        <!-- ================= MAIN ACTIVITY ================= -->
+        <activity
+            android:name=".view.MainActivity"
+            android:exported="true" />
 
         <!-- ================= OTHER ACTIVITIES ================= -->
 
@@ -74,6 +77,11 @@
         <!-- Salary Overview -->
         <activity
             android:name=".view.SalaryOverviewActivity"
+            android:exported="false" />
+
+        <!-- Notifications -->
+        <activity
+            android:name=".view.NotificationsActivity"
             android:exported="false" />
 
         <!-- ================= FILE PROVIDER ================= -->

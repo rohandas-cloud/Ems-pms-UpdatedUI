@@ -38,25 +38,29 @@ class CalendarAdapter(
                 android.util.Log.d("CALENDAR_ADAPTER", "Date 16 status: ${day.status}")
             }
 
+            val typedValue = android.util.TypedValue()
+            context.theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true)
+            val textColor = typedValue.data
+
             when (day.status?.lowercase()) {
                 "present" -> {
                     holder.dotStatus.visibility = View.VISIBLE
                     holder.dotStatus.setBackgroundResource(R.drawable.dot_present)
-                    holder.tvDayNumber.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+                    holder.tvDayNumber.setTextColor(textColor)
                 }
                 "absent" -> {
                     holder.dotStatus.visibility = View.VISIBLE
                     holder.dotStatus.setBackgroundResource(R.drawable.dot_absent)
-                    holder.tvDayNumber.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+                    holder.tvDayNumber.setTextColor(textColor)
                 }
                 "leave" -> {
                     holder.dotStatus.visibility = View.VISIBLE
                     holder.dotStatus.setBackgroundResource(R.drawable.dot_leave)
-                    holder.tvDayNumber.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+                    holder.tvDayNumber.setTextColor(textColor)
                 }
                 else -> {
                     holder.dotStatus.visibility = View.INVISIBLE
-                    holder.tvDayNumber.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+                    holder.tvDayNumber.setTextColor(textColor)
                 }
             }
 

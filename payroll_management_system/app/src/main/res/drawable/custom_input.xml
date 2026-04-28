@@ -15,10 +15,10 @@
     <!-- Default state -->
     <item>
         <shape>
-            <solid android:color="#FAFAFA"/> <!-- normal light -->
+            <solid android:color="?android:attr/colorBackground"/> <!-- normal light -->
             <stroke
                 android:width="1dp"
-                android:color="#E0E0E0"/>
+                android:color="?attr/colorControlHighlight"/>
             <corners android:radius="10dp"/>
         </shape>
     </item>

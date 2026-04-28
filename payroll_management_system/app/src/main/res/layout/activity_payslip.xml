@@ -86,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="Employee ID: VVDN123"
-                        android:textColor="#666666" />
+                        android:textColor="?android:attr/textColorSecondary" />
 
                     <TextView
                         android:id="@+id/tvDepartment"
@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="Department: Engineering"
-                        android:textColor="#666666" />
+                        android:textColor="?android:attr/textColorSecondary" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -124,7 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Basic &amp; Allowances"
-                        android:textColor="#888888"
+                        android:textColor="?android:attr/textColorSecondary"
                         android:textSize="12sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -155,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tax &amp; PF"
-                        android:textColor="#888888"
+                        android:textColor="?android:attr/textColorSecondary"
                         android:textSize="12sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

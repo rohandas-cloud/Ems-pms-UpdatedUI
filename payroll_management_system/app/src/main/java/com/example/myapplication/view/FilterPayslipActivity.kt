@@ -65,6 +65,9 @@ class FilterPayslipActivity : AppCompatActivity() {
         tvEmployeeIdCard.text = MyApplication.sessionManager.fetchEmpIdPms() ?: "ID: N/A"
 
         findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
             finish()
         }
 
@@ -222,5 +225,12 @@ class FilterPayslipActivity : AppCompatActivity() {
             }
             .setNegativeButton("Cancel", null)
             .show()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(this, SecondActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        startActivity(intent)
+        finish()
     }
 }

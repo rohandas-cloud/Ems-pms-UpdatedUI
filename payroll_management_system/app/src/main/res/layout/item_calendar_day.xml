@@ -11,14 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1"
-        android:textColor="#000000"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="14sp"
         android:textStyle="bold" />
 
     <View
         android:id="@+id/dotStatus"
-        android:layout_width="4dp"
-        android:layout_height="4dp"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/bg_circle_orange" 
         android:visibility="invisible" />

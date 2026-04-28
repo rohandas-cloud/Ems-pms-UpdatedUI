@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="?attr/colorSurface">
 
     <!-- Toolbar -->
     <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_back"
-            app:tint="#000000" />
+            app:tint="?attr/colorOnSurface" />
 
         <TextView
             android:layout_width="0dp"
@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:layout_marginStart="16dp"
             android:text="Leave Balance"
-            android:textColor="#000000"
+            android:textColor="?attr/colorOnSurface"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -93,8 +93,8 @@
                 android:background="@drawable/bg_card_outline">
 
                 <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Casual Leave" android:textColor="#000000" android:textStyle="bold" android:textSize="16sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="6 / 12 days" android:textColor="#888888" android:textSize="14sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Casual Leave" android:textColor="?attr/colorOnSurface" android:textStyle="bold" android:textSize="16sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="6 / 12 days" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
                 </RelativeLayout>
 
                 <!-- Custom Progress Bar representation using simple views since we can't use complex styling inline perfectly without extra drawables -->
@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="6 days remaining"
-                    android:textColor="#888888"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -122,8 +122,8 @@
                 android:background="@drawable/bg_card_outline">
 
                 <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sick Leave" android:textColor="#000000" android:textStyle="bold" android:textSize="16sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="4 / 10 days" android:textColor="#888888" android:textSize="14sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sick Leave" android:textColor="?attr/colorOnSurface" android:textStyle="bold" android:textSize="16sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="4 / 10 days" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
                 </RelativeLayout>
 
                 <FrameLayout android:layout_width="match_parent" android:layout_height="8dp" android:layout_marginTop="16dp" android:background="#F0F0F0">
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="6 days remaining"
-                    android:textColor="#888888"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -150,8 +150,8 @@
                 android:background="@drawable/bg_card_outline">
 
                 <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Earned Leave" android:textColor="#000000" android:textStyle="bold" android:textSize="16sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="8 / 15 days" android:textColor="#888888" android:textSize="14sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Earned Leave" android:textColor="?attr/colorOnSurface" android:textStyle="bold" android:textSize="16sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="8 / 15 days" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
                 </RelativeLayout>
 
                 <FrameLayout android:layout_width="match_parent" android:layout_height="8dp" android:layout_marginTop="16dp" android:background="#F0F0F0">
@@ -164,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="7 days remaining"
-                    android:textColor="#888888"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -178,8 +178,8 @@
                 android:background="@drawable/bg_card_outline">
 
                 <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Privilege Leave" android:textColor="#000000" android:textStyle="bold" android:textSize="16sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="2 / 5 days" android:textColor="#888888" android:textSize="14sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Privilege Leave" android:textColor="?attr/colorOnSurface" android:textStyle="bold" android:textSize="16sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="2 / 5 days" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
                 </RelativeLayout>
 
                 <FrameLayout android:layout_width="match_parent" android:layout_height="8dp" android:layout_marginTop="16dp" android:background="#F0F0F0">
@@ -192,7 +192,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="3 days remaining"
-                    android:textColor="#888888"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -241,7 +241,7 @@
         android:layout_height="wrap_content"
         app:menu="@menu/bottom_nav"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="#FFFFFF"
+        android:background="?attr/colorSurface"
         app:itemTextColor="@color/bottom_nav_item_color"
         app:itemIconTint="@color/bottom_nav_item_color" />
 

@@ -85,26 +85,37 @@ class ApplyLeaveActivity : AppCompatActivity() {
     }
 
     private fun setupDatePickers() {
-        val dateRangePicker = MaterialDatePicker.Builder.dateRangePicker()
-            .setTitleText(getString(R.string.select_date_range))
-            .build()
-
-        val listener = View.OnClickListener {
-            if (!dateRangePicker.isAdded) {
-                dateRangePicker.show(supportFragmentManager, "DATE_PICKER")
-            }
+        val calendar = java.util.Calendar.getInstance()
+        
+        val dateSetListener = { textView: TextView ->
+            val datePickerDialog = android.app.DatePickerDialog(
+                this, 
+                { _, year, month, dayOfMonth ->
+                    val selectedDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
+                    textView.text = selectedDate
+                    
+                    val typedValue = android.util.TypedValue()
+                    theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true)
+                    textView.setTextColor(typedValue.data)
+                }, 
+                calendar.get(java.util.Calendar.YEAR), 
+                calendar.get(java.util.Calendar.MONTH), 
+                calendar.get(java.util.Calendar.DAY_OF_MONTH)
+            )
+            
+            // Disable past dates
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+            
+            // Restrict to end of current month
+            val endOfMonth = java.util.Calendar.getInstance()
+            endOfMonth.set(java.util.Calendar.DAY_OF_MONTH, endOfMonth.getActualMaximum(java.util.Calendar.DAY_OF_MONTH))
+            datePickerDialog.datePicker.maxDate = endOfMonth.timeInMillis
+            
+            datePickerDialog.show()
         }
 
-        tvFromDate.setOnClickListener(listener)
-        tvToDate.setOnClickListener(listener)
-
-        dateRangePicker.addOnPositiveButtonClickListener { selection ->
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            tvFromDate.text = sdf.format(Date(selection.first))
-            tvToDate.text = sdf.format(Date(selection.second))
-            tvFromDate.setTextColor(android.graphics.Color.BLACK)
-            tvToDate.setTextColor(android.graphics.Color.BLACK)
-        }
+        tvFromDate.setOnClickListener { dateSetListener(tvFromDate) }
+        tvToDate.setOnClickListener { dateSetListener(tvToDate) }
     }
 
     private fun validateAndApply() {

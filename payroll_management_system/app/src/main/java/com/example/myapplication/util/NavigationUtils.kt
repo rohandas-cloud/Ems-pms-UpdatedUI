@@ -44,14 +44,18 @@ object NavigationUtils {
     private fun navigateTo(currentActivity: Activity, targetClass: Class<*>) {
         if (currentActivity.javaClass != targetClass) {
             val intent = Intent(currentActivity, targetClass)
+            
             if (targetClass == SecondActivity::class.java) {
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                // Clear top ensures we pop back to the original Home without recreating it
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            } else {
+                // Bring existing activity to front if it exists, otherwise start normally
+                intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             }
+            
             currentActivity.startActivity(intent)
-            currentActivity.overridePendingTransition(0, 0)
-            if (targetClass == SecondActivity::class.java) {
-                currentActivity.finish()
-            }
+            // Add a smooth fade transition instead of an abrupt cut
+            currentActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
     }
 }

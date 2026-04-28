@@ -25,6 +25,7 @@ class SessionManager(context: Context) {
         // Session Metadata
         private const val LOGIN_TIMESTAMP = "login_timestamp"
         private const val IS_LOGGED_IN = "is_logged_in"
+        private const val IS_DARK_MODE = "is_dark_mode"
     }
 
     // =========================
@@ -151,6 +152,13 @@ class SessionManager(context: Context) {
 
     fun isLoggedIn(): Boolean =
         prefs.getBoolean(IS_LOGGED_IN, false)
+
+    fun setDarkMode(isDarkMode: Boolean) {
+        prefs.edit().putBoolean(IS_DARK_MODE, isDarkMode).apply()
+    }
+
+    fun isDarkMode(): Boolean =
+        prefs.getBoolean(IS_DARK_MODE, false)
 
     // =========================
     // CHECK IF BOTH TOKENS EXISTS

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="?attr/colorSurface">
 
     <!-- Header -->
     <LinearLayout
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hi, User"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -47,15 +47,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Employee ID: -----"
-                android:textColor="#888888"
+                android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14sp" />
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/ivNotifications"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_notifications"
-            app:tint="#000000" />
+            app:tint="?attr/colorOnSurface" />
     </LinearLayout>
 
     <ScrollView
@@ -146,14 +147,14 @@
                         android:layout_width="28dp"
                         android:layout_height="28dp"
                         android:src="@drawable/ic_umbrella"
-                        app:tint="#000000" />
+                        app:tint="?attr/colorOnSurface" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="Leave Balance"
-                        android:textColor="#000000"
+                        android:textColor="?attr/colorOnSurface"
                         android:textStyle="bold"
                         android:textSize="14sp" />
                         
@@ -163,7 +164,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="-- Days Left"
-                        android:textColor="#888888"
+                        android:textColor="?android:attr/textColorSecondary"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -184,14 +185,14 @@
                         android:layout_width="28dp"
                         android:layout_height="28dp"
                         android:src="@drawable/ic_file"
-                        app:tint="#000000" />
+                        app:tint="?attr/colorOnSurface" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="Payslip"
-                        android:textColor="#000000"
+                        android:textColor="?attr/colorOnSurface"
                         android:textStyle="bold"
                         android:textSize="14sp" />
                         
@@ -200,45 +201,46 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="Download"
-                        android:textColor="#888888"
+                        android:textColor="?android:attr/textColorSecondary"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <!-- Salary Overview Card -->
             <LinearLayout
+                android:id="@+id/llSalaryOverviewCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/bg_card_outline">
+                android:background="@drawable/bg_card_outline"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
 
                 <RelativeLayout
-                    android:id="@+id/rlSalaryOverviewDetails"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Salary Overview" android:textColor="#000000" android:textStyle="bold" android:textSize="16sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="View Details ->" android:textColor="#888888" android:textSize="14sp" />
+                    android:layout_height="wrap_content">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Salary Overview" android:textColor="?attr/colorOnSurface" android:textStyle="bold" android:textSize="16sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="View Details ->" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
                 </RelativeLayout>
 
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:orientation="horizontal">
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Gross Salary" android:textColor="#888888" android:textSize="14sp" />
-                        <TextView android:id="@+id/tvGrossSalaryAmount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="₹XXXX" android:textColor="#000000" android:textSize="18sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Gross Salary" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
+                        <TextView android:id="@+id/tvGrossSalaryAmount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="₹XXXX" android:textColor="?attr/colorOnSurface" android:textSize="18sp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Net Salary" android:textColor="#888888" android:textSize="14sp" />
-                        <TextView android:id="@+id/tvNetSalaryAmount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="₹XXXX" android:textColor="#000000" android:textSize="18sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Net Salary" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
+                        <TextView android:id="@+id/tvNetSalaryAmount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="₹XXXX" android:textColor="?attr/colorOnSurface" android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" android:layout_marginVertical="16dp" />
 
                 <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Deductions" android:textColor="#888888" android:textSize="14sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Deductions" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="- ₹11,800" android:textColor="#F44336" android:textSize="14sp" />
                 </RelativeLayout>
             </LinearLayout>
@@ -248,7 +250,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quick Actions"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSurface"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:layout_marginTop="24dp"
@@ -266,9 +268,9 @@
                 android:clickable="true"
                 android:focusable="true">
 
-                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_calendar" app:tint="#000000" />
-                <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:text="Apply Leave" android:textColor="#000000" android:textSize="16sp" />
-                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_arrow_right" app:tint="#888888" />
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_calendar" app:tint="?attr/colorOnSurface" />
+                <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:text="Apply Leave" android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
+                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_arrow_right" app:tint="?android:attr/textColorSecondary" />
             </LinearLayout>
 
             <LinearLayout
@@ -282,9 +284,9 @@
                 android:clickable="true"
                 android:focusable="true">
 
-                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_calendar" app:tint="#000000" />
-                <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:text="View Holidays" android:textColor="#000000" android:textSize="16sp" />
-                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_arrow_right" app:tint="#888888" />
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_calendar" app:tint="?attr/colorOnSurface" />
+                <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:text="View Holidays" android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
+                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_arrow_right" app:tint="?android:attr/textColorSecondary" />
             </LinearLayout>
 
             <!-- Attendance -->
@@ -292,49 +294,50 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Attendance"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSurface"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="12dp" />
 
             <LinearLayout
+                android:id="@+id/llAttendanceCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp"
-                android:background="@drawable/bg_card_outline">
+                android:background="@drawable/bg_card_outline"
+                android:foreground="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
 
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
-                    <ImageView android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/ic_clock" app:tint="#000000" />
+                    <ImageView android:layout_width="28dp" android:layout_height="28dp" android:src="@drawable/ic_clock" app:tint="?attr/colorOnSurface" />
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="12dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Today's Status" android:textColor="#000000" android:textStyle="bold" android:textSize="16sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="April 27, 2026" android:textColor="#888888" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Today's Status" android:textColor="?attr/colorOnSurface" android:textStyle="bold" android:textSize="16sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="April 27, 2026" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
                     </LinearLayout>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Present ✓" android:textColor="#4CAF50" android:background="#E8F5E9" android:paddingHorizontal="8dp" android:paddingVertical="2dp" android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:orientation="horizontal">
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Check-in" android:textColor="#888888" android:textSize="14sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="09:32 AM" android:textColor="#000000" android:textSize="16sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Check-in" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="09:32 AM" android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Working Hours" android:textColor="#888888" android:textSize="14sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8h 43m" android:textColor="#000000" android:textSize="16sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Working Hours" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8h 43m" android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" android:layout_marginVertical="16dp" />
 
                 <RelativeLayout
-                    android:id="@+id/rlAttendanceDetailsAction"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="This Month: 18/23 days" android:textColor="#888888" android:textSize="14sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="View Details ->" android:textColor="#000000" android:textSize="14sp" />
+                    android:layout_height="wrap_content">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="This Month: 18/23 days" android:textColor="?android:attr/textColorSecondary" android:textSize="14sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="View Details ->" android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -348,7 +351,7 @@
         android:layout_height="wrap_content"
         app:menu="@menu/bottom_nav"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="#FFFFFF"
+        android:background="?attr/colorSurface"
         app:itemTextColor="@color/bottom_nav_item_color"
         app:itemIconTint="@color/bottom_nav_item_color" />
 

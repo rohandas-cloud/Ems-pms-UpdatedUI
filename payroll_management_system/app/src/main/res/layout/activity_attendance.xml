@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA">
+    android:background="?android:attr/colorBackground">
 
     <!-- Toolbar -->
     <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_back"
-            app:tint="#000000" />
+            app:tint="?attr/colorOnSurface" />
 
         <TextView
             android:layout_width="0dp"
@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:layout_marginStart="16dp"
             android:text="Attendance"
-            android:textColor="#000000"
+            android:textColor="?attr/colorOnSurface"
             android:textSize="20sp"
             android:textStyle="bold" />
             
@@ -38,7 +38,7 @@
             android:id="@+id/tvMonthFilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#333333"
+            android:textColor="?attr/colorOnSurface"
             android:textSize="14sp"
             android:paddingHorizontal="12dp"
             android:paddingVertical="6dp"
@@ -49,7 +49,7 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#E0E0E0"
+        android:background="?attr/colorControlHighlight"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <ScrollView
@@ -133,24 +133,24 @@
                 android:background="@drawable/bg_card_outline">
 
                 <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Today - April 27" android:textColor="#000000" android:textStyle="bold" android:textSize="14sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Today - April 27" android:textColor="?attr/colorOnSurface" android:textStyle="bold" android:textSize="14sp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="Present ✓" android:textColor="#4CAF50" android:background="#E8F5E9" android:paddingHorizontal="8dp" android:paddingVertical="2dp" android:textSize="12sp" />
                 </RelativeLayout>
 
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:orientation="horizontal">
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Check-In" android:textColor="#888888" android:textSize="12sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="09:32 AM" android:textColor="#000000" android:textSize="16sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Check-In" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="09:32 AM" android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Check-out" android:textColor="#888888" android:textSize="12sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="06:15 PM" android:textColor="#000000" android:textSize="16sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Check-out" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="06:15 PM" android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Working Hours" android:textColor="#888888" android:textSize="12sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8h 43m" android:textColor="#000000" android:textSize="16sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Working Hours" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8h 43m" android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -167,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Monthly Calendar"
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorOnSurface"
                     android:textStyle="bold"
                     android:textSize="14sp" />
 
@@ -177,13 +177,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal">
-                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="S" android:gravity="center" android:textColor="#888888" android:textSize="12sp" />
-                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="M" android:gravity="center" android:textColor="#888888" android:textSize="12sp" />
-                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="T" android:gravity="center" android:textColor="#888888" android:textSize="12sp" />
-                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="W" android:gravity="center" android:textColor="#888888" android:textSize="12sp" />
-                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="T" android:gravity="center" android:textColor="#888888" android:textSize="12sp" />
-                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="F" android:gravity="center" android:textColor="#888888" android:textSize="12sp" />
-                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="S" android:gravity="center" android:textColor="#888888" android:textSize="12sp" />
+                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="S" android:gravity="center" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="M" android:gravity="center" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="T" android:gravity="center" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="W" android:gravity="center" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="T" android:gravity="center" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="F" android:gravity="center" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="S" android:gravity="center" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
                 </LinearLayout>
 
                 <!-- Calendar RecyclerView -->
@@ -191,6 +191,7 @@
                     android:id="@+id/rvCalendar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
                     android:layout_marginTop="8dp" />
  
                 <!-- Legend -->
@@ -202,13 +203,13 @@
                     android:gravity="center_vertical">
                     
                     <View android:layout_width="6dp" android:layout_height="6dp" android:background="@drawable/dot_present" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="4dp" android:text="Present" android:textColor="#888888" android:textSize="10sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="4dp" android:text="Present" android:textColor="?android:attr/textColorSecondary" android:textSize="10sp" />
 
                     <View android:layout_width="6dp" android:layout_height="6dp" android:layout_marginStart="16dp" android:background="@drawable/dot_absent" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="4dp" android:text="Absent" android:textColor="#888888" android:textSize="10sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="4dp" android:text="Absent" android:textColor="?android:attr/textColorSecondary" android:textSize="10sp" />
 
                     <View android:layout_width="6dp" android:layout_height="6dp" android:layout_marginStart="16dp" android:background="@drawable/dot_leave" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="4dp" android:text="Leave" android:textColor="#888888" android:textSize="10sp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="4dp" android:text="Leave" android:textColor="?android:attr/textColorSecondary" android:textSize="10sp" />
                 </LinearLayout>
             </LinearLayout>
             
@@ -225,22 +226,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="This Week"
-                    android:textColor="#000000"
+                    android:textColor="?attr/colorOnSurface"
                     android:textStyle="bold"
                     android:textSize="14sp" />
 
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:orientation="horizontal">
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Total Hours" android:textColor="#888888" android:textSize="12sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="42h" android:textColor="#000000" android:textSize="16sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Total Hours" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="42h" android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Avg Login" android:textColor="#888888" android:textSize="12sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="09:25" android:textColor="#000000" android:textSize="16sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Avg Login" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="09:25" android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Late Days" android:textColor="#888888" android:textSize="12sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1" android:textColor="#000000" android:textSize="16sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Late Days" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1" android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -253,9 +254,9 @@
                 android:scrollbars="none">
                 <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="All" android:textColor="#FFFFFF" android:background="@drawable/bg_dark_rounded" android:paddingHorizontal="16dp" android:paddingVertical="6dp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="Present" android:textColor="#333333" android:background="@drawable/bg_card_outline" android:paddingHorizontal="16dp" android:paddingVertical="6dp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="Absent" android:textColor="#333333" android:background="@drawable/bg_card_outline" android:paddingHorizontal="16dp" android:paddingVertical="6dp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="Leave" android:textColor="#333333" android:background="@drawable/bg_card_outline" android:paddingHorizontal="16dp" android:paddingVertical="6dp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="Present" android:textColor="?attr/colorOnSurface" android:background="@drawable/bg_card_outline" android:paddingHorizontal="16dp" android:paddingVertical="6dp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="Absent" android:textColor="?attr/colorOnSurface" android:background="@drawable/bg_card_outline" android:paddingHorizontal="16dp" android:paddingVertical="6dp" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="Leave" android:textColor="?attr/colorOnSurface" android:background="@drawable/bg_card_outline" android:paddingHorizontal="16dp" android:paddingVertical="6dp" />
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -264,7 +265,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Attendance Logs"
-                android:textColor="#000000"
+                android:textColor="?attr/colorOnSurface"
                 android:textStyle="bold"
                 android:textSize="14sp" />
 
@@ -279,12 +280,12 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingVertical="12dp" android:paddingHorizontal="16dp" android:gravity="center_vertical" android:layout_marginBottom="8dp" android:background="@drawable/bg_card_outline">
                     <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_check_circle" app:tint="#4CAF50" />
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="16dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Apr 25" android:textColor="#000000" android:textSize="14sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="09:30 - 06:10" android:textColor="#888888" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Apr 25" android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="09:30 - 06:10" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="end">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Present" android:textColor="#000000" android:textSize="14sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8h 40m" android:textColor="#888888" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Present" android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8h 40m" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -292,12 +293,12 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingVertical="12dp" android:paddingHorizontal="16dp" android:gravity="center_vertical" android:layout_marginBottom="8dp" android:background="@drawable/bg_card_outline">
                     <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_check_circle" app:tint="#4CAF50" />
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="16dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Apr 24" android:textColor="#000000" android:textSize="14sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="09:45 - 06:00" android:textColor="#888888" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Apr 24" android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="09:45 - 06:00" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="end">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Late" android:textColor="#000000" android:textSize="14sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8h 15m" android:textColor="#888888" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Late" android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8h 15m" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -305,12 +306,12 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingVertical="12dp" android:paddingHorizontal="16dp" android:gravity="center_vertical" android:layout_marginBottom="8dp" android:background="@drawable/bg_card_outline">
                     <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_calendar" app:tint="#FF9800" />
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="16dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Apr 23" android:textColor="#000000" android:textSize="14sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--:--" android:textColor="#888888" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Apr 23" android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--:--" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="end">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Leave" android:textColor="#000000" android:textSize="14sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textColor="#888888" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Leave" android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -318,12 +319,12 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingVertical="12dp" android:paddingHorizontal="16dp" android:gravity="center_vertical" android:layout_marginBottom="8dp" android:background="@drawable/bg_card_outline">
                     <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_check_circle" app:tint="#4CAF50" />
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="16dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Apr 22" android:textColor="#000000" android:textSize="14sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="09:25 - 06:05" android:textColor="#888888" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Apr 22" android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="09:25 - 06:05" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="end">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Present" android:textColor="#000000" android:textSize="14sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8h 40m" android:textColor="#888888" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Present" android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8h 40m" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -331,12 +332,12 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingVertical="12dp" android:paddingHorizontal="16dp" android:gravity="center_vertical" android:layout_marginBottom="8dp" android:background="@drawable/bg_card_outline">
                     <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_close" app:tint="#F44336" />
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="16dp">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Apr 16" android:textColor="#000000" android:textSize="14sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--:--" android:textColor="#888888" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Apr 16" android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--:--" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="end">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Absent" android:textColor="#000000" android:textSize="14sp" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textColor="#888888" android:textSize="12sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Absent" android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textColor="?android:attr/textColorSecondary" android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -352,7 +353,7 @@
         android:layout_height="wrap_content"
         app:menu="@menu/bottom_nav"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="#FFFFFF"
+        android:background="?attr/colorSurface"
         app:itemTextColor="@color/bottom_nav_item_color"
         app:itemIconTint="@color/bottom_nav_item_color" />
 

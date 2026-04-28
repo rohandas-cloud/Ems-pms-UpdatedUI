@@ -37,8 +37,8 @@ class SecondActivity : AppCompatActivity() {
         val llPayslip = findViewById<View>(R.id.llPayslip)
         val llApplyLeaveAction = findViewById<View>(R.id.llApplyLeaveAction)
         val llViewHolidaysAction = findViewById<View>(R.id.llViewHolidaysAction)
-        val rlAttendanceDetailsAction = findViewById<View>(R.id.rlAttendanceDetailsAction)
-        val rlSalaryOverviewDetails = findViewById<View>(R.id.rlSalaryOverviewDetails)
+        val rlAttendanceDetailsAction = findViewById<View>(R.id.llAttendanceCard)
+        val rlSalaryOverviewDetails = findViewById<View>(R.id.llSalaryOverviewCard)
         
         // Summary Views
         val tvLeaveBalanceSummary = findViewById<TextView>(R.id.tvLeaveBalanceSummary)
@@ -109,6 +109,11 @@ class SecondActivity : AppCompatActivity() {
 
         rlSalaryOverviewDetails.setOnClickListener {
             startActivity(Intent(this, SalaryOverviewActivity::class.java))
+        }
+
+        val ivNotifications = findViewById<ImageView>(R.id.ivNotifications)
+        ivNotifications?.setOnClickListener {
+            startActivity(Intent(this, NotificationsActivity::class.java))
         }
 
         // Logout Observer
